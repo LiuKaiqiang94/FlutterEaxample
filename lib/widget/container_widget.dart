@@ -80,6 +80,7 @@ class BoxRoute extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
+          Text("ConstrainedBox"),
           ConstrainedBox(
             constraints: BoxConstraints(
               minWidth: double.infinity, //宽度尽量大
@@ -90,6 +91,7 @@ class BoxRoute extends StatelessWidget {
               child: redBox,
             ),
           ),
+          Text("SizedBox"),
           SizedBox(
             width: 80,
             height: 80,
@@ -97,11 +99,28 @@ class BoxRoute extends StatelessWidget {
           ),
           //最终 宽90 高60  取父子最大的宽高值，若maxWidth和
           //maxHeight,取父子较小的宽高值，这样才能保证不发生冲突
+          Text("父子共同约束"),
           ConstrainedBox(
             constraints: BoxConstraints(minWidth: 60, minHeight: 60), //父
             child: ConstrainedBox(
               constraints: BoxConstraints(minWidth: 90, minHeight: 20), //子
               child: redBox,
+            ),
+          ),
+          Text("DecoratedBox装饰子widget"),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient:
+                  LinearGradient(colors: [Colors.red, Colors.orange[700]]),
+              borderRadius: BorderRadius.circular(3), //圆角
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black54, offset: Offset(2, 2), blurRadius: 4),
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
+              child: Text("Login", style: TextStyle(color: Colors.white)),
             ),
           ),
         ],
