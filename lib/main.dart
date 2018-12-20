@@ -1,9 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_example/widget/base_widget.dart';
-
-import 'widget/state_widget.dart';
+import 'package:flutter_example/route.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,19 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Home Page'), //应用首页路由
-      routes: {
-        //注册路由表
-        "new_page": (context) => NewRoute(),
-        "count_page": (context) => CounterWidget(),
-        "cupertino_page": (context) => CupertinoTestRoute(),
-        "base_widget_page": (context) => BaseWidgetRoute(),
-        "text_page": (context) => TextStyleRoute(),
-        "button_page": (context) => ButtonRoute(),
-        "icon_page": (context) => IconRoute(),
-        "check_page": (context) => CheckBoxRoute(),
-        "input_page": (context) => InputRoute(),
-        "form_page": (context) => FormTestRoute(),
-      },
+      routes: new AppRoute().getRoute(),
     );
   }
 }
@@ -60,10 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               FlatButton(
                 //按钮
-                child: Text("Click to Learning Flutter!"),
+                child: Text("基础Widget"),
                 textColor: Colors.blue,
                 onPressed: () {
                   Navigator.pushNamed(context, "base_widget_page");
+                },
+              ),
+              FlatButton(
+                child: Text("布局Widget"),
+                textColor: Colors.blue,
+                onPressed: () {
+                  Navigator.pushNamed(context, "layout_widget_page");
                 },
               ),
               FlatButton(

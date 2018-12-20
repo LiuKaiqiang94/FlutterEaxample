@@ -5,7 +5,7 @@ class BaseWidgetRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter Examples"),
+        title: Text("基础Widget"),
       ),
       body: Center(
         child: Column(
