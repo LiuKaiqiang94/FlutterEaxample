@@ -1,6 +1,6 @@
-# flutter_example
+# Flutter Example
 
-A new Flutter application.
+学习flutter过程中的练习代码，example主要来自[《Flutter实战》](https://book.flutterchina.club/)一书。
 
 ## Getting Started
 
