@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class ContainerLayoutRoute extends StatelessWidget {
   @override
@@ -21,6 +22,20 @@ class ContainerLayoutRoute extends StatelessWidget {
             child: Text("ConstrainedBox和SizedBox"),
             onPressed: () {
               Navigator.pushNamed(context, "box_page");
+            },
+          ),
+          FlatButton(
+            textColor: Colors.blue,
+            child: Text("Transform变换"),
+            onPressed: () {
+              Navigator.pushNamed(context, "transform_page");
+            },
+          ),
+          FlatButton(
+            textColor: Colors.blue,
+            child: Text("Container"),
+            onPressed: () {
+              Navigator.pushNamed(context, "container_page");
             },
           ),
         ],
@@ -121,6 +136,137 @@ class BoxRoute extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 80, vertical: 18),
               child: Text("Login", style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+///Transform变换
+class TransformRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Transform变换"),
+      ),
+      body: Row(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Text("变换示例"),
+              Padding(
+                padding: EdgeInsets.only(top: 60, left: 30),
+                child: Container(
+                  color: Colors.black,
+                  child: Transform(
+                    alignment: Alignment.topRight,
+                    transform: Matrix4.skewY(0.3),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.deepOrange,
+                      child: const Text("Apartment for rent!"),
+                    ),
+                  ),
+                ),
+              ),
+              Text("平移"),
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.red),
+                  child: Transform.translate(
+                    offset: Offset(-20, -5),
+                    child: Text("Hello world"),
+                  ),
+                ),
+              ),
+              Text("旋转"),
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.red),
+                  child: Transform.rotate(
+                    angle: math.pi / 3,
+                    child: Text("Hello World"),
+                  ),
+                ),
+              ),
+              Text("缩放"),
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.red),
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: Text("Hello world"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Text("RotateBox"),
+              DecoratedBox(
+                decoration: BoxDecoration(color: Colors.red),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Text("Hello world"),
+                ),
+              ),
+              Text(
+                "你好",
+                style: TextStyle(color: Colors.green, fontSize: 18),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+///用Container实现渐变效果的卡片
+///Flutter中组合优于继承
+///Container有自己的Margin和Padding
+class ContainerRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Container"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 50, left: 120),
+            constraints: BoxConstraints.tightFor(width: 200, height: 150),
+            //开片大小
+            decoration: BoxDecoration(
+              //背景装饰
+              gradient: RadialGradient(
+                  //背景径向渐变
+                  colors: [Colors.red, Colors.orange],
+                  center: Alignment.topLeft,
+                  radius: .98),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  offset: Offset(2, 2),
+                  blurRadius: 4,
+                ),
+              ],
+            ),
+            transform: Matrix4.rotationZ(.2),
+            //卡片倾斜变换
+            alignment: Alignment.center,
+            //卡片内文字居中
+            child: Text(
+              "5.20",
+              style: TextStyle(color: Colors.white,fontSize: 40),
             ),
           ),
         ],

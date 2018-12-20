@@ -29,6 +29,8 @@ class AppRoute {
     "container_widget_page": (context) => ContainerLayoutRoute(),
     "padding_page": (context) => PaddingRoute(),
     "box_page": (context) => BoxRoute(),
+    "transform_page": (context) => TransformRoute(),
+    "container_page": (context) => ContainerRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {
