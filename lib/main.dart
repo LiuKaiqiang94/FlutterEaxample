@@ -67,6 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               FlatButton(
+                child: Text("可滚动Widget"),
+                textColor: Colors.blue,
+                onPressed: () {
+                  Navigator.pushNamed(context, "scroll_widget_page");
+                },
+              ),
+              FlatButton(
                 //按钮
                 child: Text("open ios style test"),
                 textColor: Colors.blue,

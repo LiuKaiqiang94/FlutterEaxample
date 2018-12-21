@@ -4,6 +4,7 @@ import 'package:flutter_example/widget/base_widget.dart';
 import 'package:flutter_example/widget/layout_widget.dart';
 import 'package:flutter_example/widget/state_widget.dart';
 import 'package:flutter_example/widget/container_widget.dart';
+import 'package:flutter_example/widget/scroll_widget.dart';
 
 //路由表
 class AppRoute {
@@ -31,6 +32,10 @@ class AppRoute {
     "box_page": (context) => BoxRoute(),
     "transform_page": (context) => TransformRoute(),
     "container_page": (context) => ContainerRoute(),
+    //可滚动widget
+    "scroll_widget_page": (context) => ScrollWidgetRoute(),
+    "single_child_scroll_page": (context) => SingleChildScrollViewRoute(),
+    "list_view_page": (context) => ListViewRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {
