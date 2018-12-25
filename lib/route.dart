@@ -36,6 +36,7 @@ class AppRoute {
     "scroll_widget_page": (context) => ScrollWidgetRoute(),
     "single_child_scroll_page": (context) => SingleChildScrollViewRoute(),
     "list_view_page": (context) => ListViewRoute(),
+    "grid_view_page": (context) => GridViewRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {

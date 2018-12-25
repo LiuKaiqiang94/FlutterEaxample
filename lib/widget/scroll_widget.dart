@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 ///可滚动的widget都直接或间接包含一个Scrollable widget
 class ScrollWidgetRoute extends StatelessWidget {
@@ -23,6 +24,13 @@ class ScrollWidgetRoute extends StatelessWidget {
             child: Text("ListView"),
             onPressed: () {
               Navigator.pushNamed(context, "list_view_page");
+            },
+          ),
+          FlatButton(
+            textColor: Colors.blue,
+            child: Text("GridView"),
+            onPressed: () {
+              Navigator.pushNamed(context, "grid_view_page");
             },
           ),
         ],
@@ -192,4 +200,172 @@ class InfiniteListViewState extends State<InfiniteListView> {
       });
     });
   }
+}
+
+///GridView
+class GridViewRoute extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("GridView"),
+      ),
+      body: GridView6(),
+    );
+  }
+}
+
+///一般方式
+class GridView1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      ///SliverGridDelegateWithFixedCrossAxisCount 纵轴为固定数量的layout算法
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, //纵轴子元素数量
+        childAspectRatio: 1, //子元素宽高比
+      ),
+      children: <Widget>[
+        Icon(Icons.ac_unit),
+        Icon(Icons.airport_shuttle),
+        Icon(Icons.all_inclusive),
+        Icon(Icons.beach_access),
+        Icon(Icons.cake),
+        Icon(Icons.free_breakfast),
+      ],
+    );
+  }
+}
+
+///GridView.count方式
+class GridView2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 3,
+      childAspectRatio: 1,
+      children: <Widget>[
+        Icon(Icons.ac_unit),
+        Icon(Icons.airport_shuttle),
+        Icon(Icons.all_inclusive),
+        Icon(Icons.beach_access),
+        Icon(Icons.cake),
+        Icon(Icons.free_breakfast),
+      ],
+    );
+  }
+}
+
+///纵轴子元素为固定最大长度的layout算法
+class GridView3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //SliverGridDelegateWithMaxCrossAxisExtent
+    //纵轴子元素为固定最大长度的layout算法
+    return GridView(
+      padding: EdgeInsets.zero,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 100, childAspectRatio: 2),
+      children: <Widget>[
+        Icon(Icons.ac_unit),
+        Icon(Icons.airport_shuttle),
+        Icon(Icons.all_inclusive),
+        Icon(Icons.beach_access),
+        Icon(Icons.cake),
+        Icon(Icons.free_breakfast),
+      ],
+    );
+  }
+}
+
+///GridView.extent方式
+class GridView4 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.extent(
+      maxCrossAxisExtent: 100,
+      childAspectRatio: 2,
+      children: <Widget>[
+        Icon(Icons.ac_unit),
+        Icon(Icons.airport_shuttle),
+        Icon(Icons.all_inclusive),
+        Icon(Icons.beach_access),
+        Icon(Icons.cake),
+        Icon(Icons.free_breakfast),
+      ],
+    );
+  }
+}
+
+/// StaggeredGridView 不均匀分布
+class GridView5 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      itemCount: 8,
+      itemBuilder: (BuildContext context, int index) => Container(
+            color: Colors.green,
+            child: Center(
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Text("$index"),
+              ),
+            ),
+          ),
+      staggeredTileBuilder: (index) =>
+          StaggeredTile.count(2, index.isEven ? 2 : 1),
+      //控制grid分布规则
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+    );
+  }
+}
+
+/// StaggeredGridView 不均匀分布升级版
+class GridView6 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    List<GridData> list = new List();
+    initData(list);
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      itemCount: 10,
+      itemBuilder: (BuildContext context, int index) => Container(
+            color: list[index]._color,
+            child: Center(
+              child: IconButton(
+                icon: Icon(list[index]._icon),
+                onPressed: () => {},
+              ),
+            ),
+          ),
+      staggeredTileBuilder: (index) =>
+          StaggeredTile.count(list[index].widthCount, list[index].heightCount),
+      //控制grid分布规则
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+    );
+  }
+
+  void initData(List<GridData> list) {
+    list.add(GridData(Colors.green, Icons.settings, 2, 2));
+    list.add(GridData(Colors.blue, Icons.wifi, 2, 1));
+    list.add(GridData(Colors.yellow, Icons.tv, 1, 2));
+    list.add(GridData(Colors.brown, Icons.tv, 1, 1));
+    list.add(GridData(Colors.red, Icons.send, 2, 2));
+    list.add(GridData(Colors.lightBlue, Icons.gamepad, 1, 2));
+    list.add(GridData(Colors.pink, Icons.bluetooth, 1, 1));
+    list.add(GridData(Colors.orange, Icons.battery_alert, 3, 1));
+    list.add(GridData(Colors.purple, Icons.computer, 1, 1));
+    list.add(GridData(Colors.blueAccent, Icons.computer, 4, 1));
+  }
+}
+
+class GridData {
+  Color _color;
+  IconData _icon;
+  int widthCount;
+  int heightCount;
+
+  GridData(this._color, this._icon, this.widthCount, this.heightCount);
 }
