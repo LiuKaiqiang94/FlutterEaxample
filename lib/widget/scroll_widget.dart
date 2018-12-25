@@ -33,6 +33,13 @@ class ScrollWidgetRoute extends StatelessWidget {
               Navigator.pushNamed(context, "grid_view_page");
             },
           ),
+          FlatButton(
+            textColor: Colors.blue,
+            child: Text("CustomScrollView"),
+            onPressed: () {
+              Navigator.pushNamed(context, "custom_scroll_page");
+            },
+          ),
         ],
       ),
     );
@@ -209,7 +216,10 @@ class GridViewRoute extends StatelessWidget {
       appBar: AppBar(
         title: Text("GridView"),
       ),
-      body: GridView6(),
+      body: Padding(
+        padding: EdgeInsets.all(6),
+        child: GridView6(),
+      ),
     );
   }
 }
@@ -342,8 +352,8 @@ class GridView6 extends StatelessWidget {
       staggeredTileBuilder: (index) =>
           StaggeredTile.count(list[index].widthCount, list[index].heightCount),
       //控制grid分布规则
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
+      mainAxisSpacing: 6,
+      crossAxisSpacing: 6,
     );
   }
 
@@ -368,4 +378,62 @@ class GridData {
   int heightCount;
 
   GridData(this._color, this._icon, this.widthCount, this.heightCount);
+}
+
+///自定义滚动模型
+///例如 GridView+ListView共同滑动
+class CustomScrollRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 250,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text("CustomScrollView"),
+              background: Image.asset(
+                "images/background.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          SliverPadding(
+            padding: const EdgeInsets.all(8),
+            sliver: new SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    color: Colors.cyan[100 * (index % 9)],
+                    child: Text("grid item $index"),
+                  );
+                },
+                childCount: 20,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 4,
+              ),
+            ),
+          ),
+          SliverFixedExtentList(
+            itemExtent: 50,
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+              return Container(
+                alignment: Alignment.center,
+                color: Colors.lightBlue[100 * (index % 9)],
+                child: Text("list item $index"),
+              );
+            }),
+          ), //包含一个appBar
+        ],
+      ),
+    );
+  }
 }

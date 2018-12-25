@@ -19,3 +19,4 @@ flutter: # flutter的相关配置
   uses-material-design: true
   assets:
     - images/icon.png
+    - images/background.png
