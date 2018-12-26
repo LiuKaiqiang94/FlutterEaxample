@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_example/main.dart';
-import 'package:flutter_example/widget/base_widget.dart';
-import 'package:flutter_example/widget/layout_widget.dart';
-import 'package:flutter_example/widget/state_widget.dart';
-import 'package:flutter_example/widget/container_widget.dart';
-import 'package:flutter_example/widget/scroll_widget.dart';
+import 'main.dart';
+import 'widget/base_widget.dart';
+import 'widget/layout_widget.dart';
+import 'widget/state_widget.dart';
+import 'widget/container_widget.dart';
+import 'widget/scroll_widget.dart';
+import 'widget/feature_widget.dart';
 
 //路由表
 class AppRoute {
@@ -41,6 +42,9 @@ class AppRoute {
     "custom_scroll_page": (context) => CustomScrollRoute(),
     "scroll_controller_page": (context) => ScrollControllerRoute(),
     "notification_listener_page": (context) => NotificationListenerRoute(),
+    //功能型widget
+    "feature_widget_page": (context) => FeatureWidgetRoute(),
+    "will_pop_scope_page": (context) => WillPopScopeRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {

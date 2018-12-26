@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DateTime _lastPressedAt; //上次点击时间
   @override
   Widget build(BuildContext context) {
     //每次setState都会调用build
@@ -38,8 +40,20 @@ class _MyHomePageState extends State<MyHomePage> {
     list.add(RouteBean("layout_widget_page", "布局Widget"));
     list.add(RouteBean("container_widget_page", "容器类Widget"));
     list.add(RouteBean("scroll_widget_page", "可滚动Widget"));
+    list.add(RouteBean("feature_widget_page", "功能型Widget"));
     list.add(RouteBean("cupertino_page", "open ios style test"));
-    return RoutePage(list, widget.title);
+    return WillPopScope(
+      child: RoutePage(list, widget.title),
+      onWillPop: () async {
+        if (_lastPressedAt == null ||
+            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 2)) {
+          _lastPressedAt = DateTime.now();
+          Fluttertoast.showToast(msg: "再次点击退出app");
+          return false;
+        }
+        return true;
+      },
+    );
   }
 }
 
