@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_example/route.dart';
 
 ///布局类Widget都包含一个或多个widget
 ///<table>
@@ -26,44 +27,12 @@ import 'package:flutter/material.dart';
 class LayoutWidgetRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("布局Widget"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          FlatButton(
-            child: Text("线性布局"),
-            textColor: Colors.blue,
-            onPressed: () {
-              Navigator.pushNamed(context, "linear_layout_page");
-            },
-          ),
-          FlatButton(
-            child: Text("弹性布局"),
-            textColor: Colors.blue,
-            onPressed: () {
-              Navigator.pushNamed(context, "expanded_layout_page");
-            },
-          ),
-          FlatButton(
-            child: Text("流式布局"),
-            textColor: Colors.blue,
-            onPressed: () {
-              Navigator.pushNamed(context, "wrap_layout_page");
-            },
-          ),
-          FlatButton(
-            child: Text("层叠布局"),
-            textColor: Colors.blue,
-            onPressed: () {
-              Navigator.pushNamed(context, "stack_layout_page");
-            },
-          ),
-        ],
-      ),
-    );
+    List<RouteBean> list = List();
+    list.add(RouteBean("linear_layout_page", "线性布局"));
+    list.add(RouteBean("expanded_layout_page", "弹性布局"));
+    list.add(RouteBean("wrap_layout_page", "流式布局"));
+    list.add(RouteBean("stack_layout_page", "层叠布局"));
+    return RoutePage(list, "布局Widget");
   }
 }
 

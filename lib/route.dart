@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_example/main.dart';
 import 'package:flutter_example/widget/base_widget.dart';
 import 'package:flutter_example/widget/layout_widget.dart';
@@ -43,4 +44,40 @@ class AppRoute {
   Map<String, WidgetBuilder> getRoute() {
     return _routeMap;
   }
+}
+
+///封装的目录页面
+class RoutePage extends StatelessWidget {
+  final List<RouteBean> list;
+  final String title;
+
+  RoutePage(this.list, this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("$title"),
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return FlatButton(
+            textColor: Colors.blue,
+            child: Text(list[index].btnName),
+            onPressed: () {
+              Navigator.pushNamed(context, list[index].routeName);
+            },
+          );
+        },
+        itemCount: list.length,
+      ),
+    );
+  }
+}
+
+class RouteBean {
+  String routeName;
+  String btnName;
+
+  RouteBean(this.routeName, this.btnName);
 }

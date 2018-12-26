@@ -1,46 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter_example/route.dart';
 
 class ContainerLayoutRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("容器类Widget"),
-      ),
-      body: Column(
-        children: <Widget>[
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("Padding"),
-            onPressed: () {
-              Navigator.pushNamed(context, "padding_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("ConstrainedBox和SizedBox"),
-            onPressed: () {
-              Navigator.pushNamed(context, "box_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("Transform变换"),
-            onPressed: () {
-              Navigator.pushNamed(context, "transform_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("Container"),
-            onPressed: () {
-              Navigator.pushNamed(context, "container_page");
-            },
-          ),
-        ],
-      ),
-    );
+    List<RouteBean> list = List();
+    list.add(RouteBean("padding_page", "Padding"));
+    list.add(RouteBean("box_page", "ConstrainedBox和SizedBox"));
+    list.add(RouteBean("transform_page", "Transform变换"));
+    list.add(RouteBean("container_page", "Container"));
+    return RoutePage(list, "容器类Widget");
   }
 }
 
@@ -266,7 +236,7 @@ class ContainerRoute extends StatelessWidget {
             //卡片内文字居中
             child: Text(
               "5.20",
-              style: TextStyle(color: Colors.white,fontSize: 40),
+              style: TextStyle(color: Colors.white, fontSize: 40),
             ),
           ),
         ],

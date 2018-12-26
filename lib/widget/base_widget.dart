@@ -1,61 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_example/route.dart';
 
 class BaseWidgetRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("基础Widget"),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            FlatButton(
-              child: Text("文本及样式"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "text_page");
-              },
-            ),
-            FlatButton(
-              child: Text("按钮"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "button_page");
-              },
-            ),
-            FlatButton(
-              child: Text("图片和ICON"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "icon_page");
-              },
-            ),
-            FlatButton(
-              child: Text("单选开关和复选框"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "check_page");
-              },
-            ),
-            FlatButton(
-              child: Text("输入框"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "input_page");
-              },
-            ),
-            FlatButton(
-              child: Text("表单"),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.pushNamed(context, "form_page");
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+    List<RouteBean> list = new List();
+    list.add(RouteBean("text_page", "文本及样式"));
+    list.add(RouteBean("button_page", "按钮"));
+    list.add(RouteBean("icon_page", "图片和ICON"));
+    list.add(RouteBean("check_page", "单选开关和复选框"));
+    list.add(RouteBean("input_page", "输入框"));
+    list.add(RouteBean("form_page", "表单"));
+    return RoutePage(list, "基础Widget");
   }
 }
 

@@ -1,48 +1,18 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_example/route.dart';
 
 ///可滚动的widget都直接或间接包含一个Scrollable widget
 class ScrollWidgetRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("可滚动Widget"),
-      ),
-      body: Column(
-        children: <Widget>[
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("SingleChildScrollView"),
-            onPressed: () {
-              Navigator.pushNamed(context, "single_child_scroll_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("ListView"),
-            onPressed: () {
-              Navigator.pushNamed(context, "list_view_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("GridView"),
-            onPressed: () {
-              Navigator.pushNamed(context, "grid_view_page");
-            },
-          ),
-          FlatButton(
-            textColor: Colors.blue,
-            child: Text("CustomScrollView"),
-            onPressed: () {
-              Navigator.pushNamed(context, "custom_scroll_page");
-            },
-          ),
-        ],
-      ),
-    );
+    List<RouteBean> list = new List();
+    list.add(RouteBean("single_child_scroll_page", "SingleChildScrollView"));
+    list.add(RouteBean("list_view_page", "ListView"));
+    list.add(RouteBean("grid_view_page", "GridView"));
+    list.add(RouteBean("custom_scroll_page", "CustomScrollView"));
+    return RoutePage(list, "可滚动Widget");
   }
 }
 

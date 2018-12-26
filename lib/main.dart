@@ -33,59 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     //每次setState都会调用build
-    return Scaffold(
-      //默认提供导航栏、标题，主屏幕的widget树的body
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        //位于屏幕中间
-        child: Center(
-          child: Column(
-            //列控件，children竖直方向排列排列
-            children: <Widget>[
-              FlatButton(
-                //按钮
-                child: Text("基础Widget"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Navigator.pushNamed(context, "base_widget_page");
-                },
-              ),
-              FlatButton(
-                child: Text("布局Widget"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Navigator.pushNamed(context, "layout_widget_page");
-                },
-              ),
-              FlatButton(
-                child: Text("容器类Widget"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Navigator.pushNamed(context, "container_widget_page");
-                },
-              ),
-              FlatButton(
-                child: Text("可滚动Widget"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Navigator.pushNamed(context, "scroll_widget_page");
-                },
-              ),
-              FlatButton(
-                //按钮
-                child: Text("open ios style test"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Navigator.pushNamed(context, "cupertino_page");
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    List<RouteBean> list = new List();
+    list.add(RouteBean("base_widget_page", "基础Widget"));
+    list.add(RouteBean("layout_widget_page", "布局Widget"));
+    list.add(RouteBean("container_widget_page", "容器类Widget"));
+    list.add(RouteBean("scroll_widget_page", "可滚动Widget"));
+    list.add(RouteBean("cupertino_page", "open ios style test"));
+    return RoutePage(list, widget.title);
   }
 }
 
