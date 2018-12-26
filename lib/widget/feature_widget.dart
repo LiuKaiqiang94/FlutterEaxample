@@ -8,6 +8,7 @@ class FeatureWidgetRoute extends StatelessWidget {
     List<RouteBean> list = List();
     list.add(RouteBean("will_pop_scope_page", "返回键拦截"));
     list.add(RouteBean("inherited_page", "数据共享"));
+    list.add(RouteBean("theme_data_page", "自定义主题"));
     return RoutePage(list, "功能型Widget");
   }
 }
@@ -123,5 +124,63 @@ class ShareDataWidgetState extends State<ShareDataTestWidget> {
     //如果build中没有依赖InheritedWidget，此回调不会被调用
     super.didChangeDependencies();
     print("Dependencies change");
+  }
+}
+
+///主题
+class ThemeDataRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => ThemeDataRouteState();
+}
+
+class ThemeDataRouteState extends State<ThemeDataRoute> {
+  Color _themeColor = Colors.teal; //当前路由主题色
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+    return Theme(
+      data: ThemeData(
+        primarySwatch: _themeColor, //用于导航栏，FloatingActionButton的背景色
+        iconTheme: IconThemeData(color: _themeColor), //icon颜色
+      ),
+      child: Scaffold(
+        appBar: AppBar(title: Text("主题测试")),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //第一行icon使用主题中的iconTheme
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.favorite),
+                Icon(Icons.airport_shuttle),
+                Text(" 颜色跟随主题")
+              ],
+            ),
+            //第二行icon自定义颜色
+            Theme(
+              data: themeData.copyWith(
+                  iconTheme: themeData.iconTheme.copyWith(
+                color: Colors.black,
+              )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.favorite),
+                  Icon(Icons.airport_shuttle),
+                  Text(" 颜色固定黑色")
+                ],
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => setState(() => _themeColor =
+              _themeColor == Colors.teal ? Colors.blue : Colors.teal),
+          child: Icon(Icons.palette),
+        ),
+      ),
+    );
   }
 }
