@@ -45,6 +45,7 @@ class AppRoute {
     //功能型widget
     "feature_widget_page": (context) => FeatureWidgetRoute(),
     "will_pop_scope_page": (context) => WillPopScopeRoute(),
+    "inherited_page": (context) => InheritedRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {
