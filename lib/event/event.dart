@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
 import 'package:flutter/gestures.dart';
+import 'eventbus.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EventRoute extends StatelessWidget {
   @override
@@ -127,7 +129,17 @@ class GestureDetectorRouteState extends State<GestureDetectorRoute> {
                   TextSpan(text: "世界"),
                 ]),
               ),
-            )
+            ),
+            Positioned(
+              left: 100,
+              top: 150,
+              child: RaisedButton(
+                child: Text("点击重置拖动球"),
+                onPressed: () {
+                  bus.emit("resetDrag", 250);
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -155,6 +167,17 @@ class _Drag extends StatefulWidget {
 class _DragState extends State<_Drag> {
   double _top = 30.0;
   double _left = 250.0;
+
+  @override
+  void initState() {
+    super.initState();
+    bus.on("resetDrag", (arg) {
+      Fluttertoast.showToast(msg: arg);
+      setState(() {
+        _left = arg[0];
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
