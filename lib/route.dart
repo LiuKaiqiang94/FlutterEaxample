@@ -51,6 +51,7 @@ class AppRoute {
     //事件处理
     "event_page": (context) => EventRoute(),
     "pointer_event": (context) => PointerEventRoute(),
+    "gesture_detector": (context) => GestureDetectorRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
+import 'package:flutter/gestures.dart';
 
 class EventRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<RouteBean> list = List();
     list.add(RouteBean("pointer_event", "Pointer事件处理"));
+    list.add(RouteBean("gesture_detector", "GestureDetector"));
     return RoutePage(list, "事件处理与通知");
   }
 }
@@ -64,6 +66,129 @@ class PointerEventRouteState extends State<PointerEventRoute> {
           ),
         ],
       ),
+    );
+  }
+}
+
+///手势检测
+class GestureDetectorRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => GestureDetectorRouteState();
+}
+
+class GestureDetectorRouteState extends State<GestureDetectorRoute> {
+  var _tapGestureRecognizer = TapGestureRecognizer();
+  String _operation = "No Gesture detected!";
+  bool _toggle = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("GestureDetector"),
+      ),
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            GestureDetector(
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.blue,
+                width: 200,
+                height: 100,
+                child: Text(
+                  _operation,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () => updateText("Tap"),
+              onDoubleTap: () => updateText("DoubleTap"),
+              onLongPress: () => updateText("LongPress"),
+            ),
+            _Drag(),
+            Positioned(
+              top: 100,
+              left: 50,
+              child: Text.rich(
+                TextSpan(children: [
+                  TextSpan(text: "你好"),
+                  TextSpan(
+                    text: "点我变色",
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: _toggle ? Colors.blue : Colors.red),
+                    recognizer: _tapGestureRecognizer
+                      ..onTap = () {
+                        setState(() {
+                          _toggle = !_toggle;
+                        });
+                      },
+                  ),
+                  TextSpan(text: "世界"),
+                ]),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void updateText(String s) {
+    setState(() {
+      _operation = s;
+    });
+  }
+
+  @override
+  void dispose() {
+    _tapGestureRecognizer.dispose();
+    super.dispose();
+  }
+}
+
+class _Drag extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _DragState();
+}
+
+class _DragState extends State<_Drag> {
+  double _top = 30.0;
+  double _left = 250.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: _top,
+          left: _left,
+          child: GestureDetector(
+            child: CircleAvatar(
+              child: Text("A"),
+            ),
+            //手指按下
+            onPanDown: (DragDownDetails e) {
+              print("用户手指按下：${e.globalPosition}");
+            },
+            //手指滑动
+            onPanUpdate: (DragUpdateDetails e) {
+              setState(() {
+                _left += e.delta.dx;
+                _top += e.delta.dy;
+              });
+            },
+            //结束滑动
+            onPanEnd: (DragEndDetails e) {
+              print(e.velocity);
+            },
+            //只识别垂直方向的手势
+//            onVerticalDragUpdate: (details) {},
+            //只识别水平方向的手势
+//            onHorizontalDragUpdate: (details) {},
+          ),
+        ),
+      ],
     );
   }
 }
