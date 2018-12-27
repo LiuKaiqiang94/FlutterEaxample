@@ -7,6 +7,7 @@ import 'widget/state_widget.dart';
 import 'widget/container_widget.dart';
 import 'widget/scroll_widget.dart';
 import 'widget/feature_widget.dart';
+import 'event/event.dart';
 
 //路由表
 class AppRoute {
@@ -47,6 +48,9 @@ class AppRoute {
     "will_pop_scope_page": (context) => WillPopScopeRoute(),
     "inherited_page": (context) => InheritedRoute(),
     "theme_data_page": (context) => ThemeDataRoute(),
+    //事件处理
+    "event_page": (context) => EventRoute(),
+    "pointer_event": (context) => PointerEventRoute(),
   };
 
   Map<String, WidgetBuilder> getRoute() {
