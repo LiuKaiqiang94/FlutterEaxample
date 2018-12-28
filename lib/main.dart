@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Home Page'), //应用首页路由
-      routes: new AppRoute().getRoute(),
+      routes: routeMap,
     );
   }
 }
