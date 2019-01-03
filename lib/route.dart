@@ -51,6 +51,7 @@ var routeMap = {
   "event_page": (context) => EventRoute(),
   "pointer_event": (context) => PointerEventRoute(),
   "gesture_detector": (context) => GestureDetectorRoute(),
+  "notification_page": (context) => NotificationRoute(),
 };
 
 ///封装的目录页面

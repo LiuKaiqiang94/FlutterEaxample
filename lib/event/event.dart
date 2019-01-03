@@ -10,6 +10,7 @@ class EventRoute extends StatelessWidget {
     List<RouteBean> list = List();
     list.add(RouteBean("pointer_event", "Pointer事件处理"));
     list.add(RouteBean("gesture_detector", "GestureDetector"));
+    list.add(RouteBean("notification_page", "Notification"));
     return RoutePage(list, "事件处理与通知");
   }
 }
@@ -214,4 +215,87 @@ class _DragState extends State<_Drag> {
       ],
     );
   }
+}
+
+///通知
+class NotificationRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => NotificationRouteState();
+}
+
+class NotificationRouteState extends State<NotificationRoute> {
+  String _msg = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Notification"),
+      ),
+//      body: ScrollableNotification(),
+      body: NotificationListener<MyNotification>(
+        onNotification: (notification) {
+          setState(() {
+            _msg += notification.msg + "  ";
+          });
+        },
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Builder(
+                builder: (context) {
+                  return RaisedButton(
+                    onPressed: () => MyNotification("Hi").dispatch(context),
+                    child: Text("Send Notification"),
+                  );
+                },
+              ),
+              Text(_msg),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///滚动通知
+class ScrollableNotification extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text("$index"),
+          );
+        },
+        itemCount: 100,
+      ),
+      onNotification: (notification) {
+        switch (notification.runtimeType) {
+          case ScrollStartNotification:
+            print("开始滚动");
+            break;
+          case ScrollUpdateNotification:
+            print("正在滚动");
+            break;
+          case ScrollEndNotification:
+            print("滚动停止");
+            break;
+          case OverscrollNotification:
+            print("滚动到边界");
+            break;
+        }
+      },
+    );
+  }
+}
+
+///自定义通知
+class MyNotification extends Notification {
+  MyNotification(this.msg);
+
+  final String msg;
 }
