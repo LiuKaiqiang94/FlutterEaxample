@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'animation/animation.dart';
+import 'event/event.dart';
 import 'main.dart';
 import 'widget/base_widget.dart';
-import 'widget/layout_widget.dart';
-import 'widget/state_widget.dart';
 import 'widget/container_widget.dart';
-import 'widget/scroll_widget.dart';
 import 'widget/feature_widget.dart';
-import 'event/event.dart';
+import 'widget/layout_widget.dart';
+import 'widget/scroll_widget.dart';
+import 'widget/state_widget.dart';
 
 //路由表
 var routeMap = {
@@ -52,6 +54,9 @@ var routeMap = {
   "pointer_event": (context) => PointerEventRoute(),
   "gesture_detector": (context) => GestureDetectorRoute(),
   "notification_page": (context) => NotificationRoute(),
+  //动画
+  "animation_page": (context) => AnimationRoute(),
+  "scale_animation_page": (context) => ScaleAnimationRoute(),
 };
 
 ///封装的目录页面

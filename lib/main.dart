@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     list.add(RouteBean("scroll_widget_page", "可滚动Widget"));
     list.add(RouteBean("feature_widget_page", "功能型Widget"));
     list.add(RouteBean("event_page", "事件处理与通知"));
+    list.add(RouteBean("animation_page", "动画"));
     list.add(RouteBean("cupertino_page", "open ios style test"));
     return WillPopScope(
       child: RoutePage(list, widget.title),
