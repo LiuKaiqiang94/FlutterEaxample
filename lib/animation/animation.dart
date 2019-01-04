@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
 import 'dart:math' as math;
+import 'package:flutter/cupertino.dart';
 
 class AnimationRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<RouteBean> list = List();
     list.add(RouteBean("scale_animation_page", "动画基本结构"));
+    list.add(RouteBean("custom_route_page", "自定义路由切换动画"));
     return RoutePage(list, "动画");
   }
 }
@@ -88,6 +90,11 @@ class _ScaleAnimationRouteState extends State<ScaleAnimationRoute>
     return Scaffold(
       appBar: AppBar(
         title: Text("动画基本结构"),
+        actions: <Widget>[
+          Icon(Icons.add),
+          Icon(Icons.subject),
+          Icon(Icons.battery_alert),
+        ],
       ),
       body: GrowTransition(
         child: Image.asset("images/icon.png"),
@@ -148,6 +155,119 @@ class GrowTransition extends StatelessWidget {
         },
         child: child,
       ),
+    );
+  }
+}
+
+class CustomSwitchRoute extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("自定义路由切换动画"),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) {
+                    return _TestSwitchRoute();
+                  }));
+                },
+                textColor: Colors.blue,
+                child: Text("Cupertino风格"),
+              ),
+              FlatButton(
+                child: Text("PageRouteBuilder渐隐渐入"),
+                textColor: Colors.blue,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: Duration(milliseconds: 500),
+                        pageBuilder: (BuildContext ctx, Animation animation,
+                            Animation secondaryAnimation) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: _TestSwitchRoute(),
+                          );
+                        },
+                      ));
+                },
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, FadeRoute(builder: (context) {
+                    return _TestSwitchRoute();
+                  }));
+                },
+                textColor: Colors.blue,
+                child: Text("自定义Route实现渐隐渐入"),
+              ),
+            ],
+          ),
+        ));
+  }
+}
+
+class _TestSwitchRoute extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("测试路由"),
+      ),
+      body: Center(
+        child: Text("测试目的路由"),
+      ),
+    );
+  }
+}
+
+///自定义路由切换效果
+class FadeRoute extends PageRoute {
+  FadeRoute({
+    @required this.builder,
+    this.transitionDuration = const Duration(milliseconds: 300),
+    this.opaque = true,
+    this.barrierDismissible = false,
+    this.barrierColor,
+    this.barrierLabel,
+    this.maintainState = true,
+  });
+
+  final WidgetBuilder builder;
+
+  @override
+  final Duration transitionDuration;
+
+  @override
+  final bool opaque;
+
+  @override
+  final bool barrierDismissible;
+
+  @override
+  final Color barrierColor;
+
+  @override
+  final String barrierLabel;
+
+  @override
+  final bool maintainState;
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    return builder(context);
+  }
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return FadeTransition(
+      opacity: animation,
+      child: builder(context),
     );
   }
 }
