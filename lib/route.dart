@@ -6,6 +6,7 @@ import 'event/event.dart';
 import 'main.dart';
 import 'widget/base_widget.dart';
 import 'widget/container_widget.dart';
+import 'widget/custom_widget.dart';
 import 'widget/feature_widget.dart';
 import 'widget/layout_widget.dart';
 import 'widget/scroll_widget.dart';
@@ -60,6 +61,9 @@ var routeMap = {
   "custom_route_page": (context) => CustomSwitchRoute(),
   "hero_page": (context) => HeroRoute(),
   "stagger_page": (context) => StaggerRoute(),
+  //自定义widget
+  "custom_widget_page": (context) => CustomWidgetRoute(),
+  "custom_intro_page": (context) => CustomIntroRoute(),
 };
 
 ///封装的目录页面
