@@ -9,6 +9,7 @@ class AnimationRoute extends StatelessWidget {
     List<RouteBean> list = List();
     list.add(RouteBean("scale_animation_page", "动画基本结构"));
     list.add(RouteBean("custom_route_page", "自定义路由切换动画"));
+    list.add(RouteBean("hero_page", "Hero动画"));
     return RoutePage(list, "动画");
   }
 }
@@ -268,6 +269,58 @@ class FadeRoute extends PageRoute {
     return FadeTransition(
       opacity: animation,
       child: builder(context),
+    );
+  }
+}
+
+///路由之间飞行的Widget 相当于共享元素转换
+class HeroRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Hero动画"),
+      ),
+      body: Container(
+        alignment: Alignment.topCenter,
+        child: InkWell(
+            child: Hero(
+              tag: "avatar",
+              child: ClipOval(
+                child: Image.asset(
+                  "images/icon.png",
+                  width: 50.0,
+                ),
+              ),
+            ),
+            onTap: () {
+              Navigator.push(context, PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: _HeroAnimationRoute(),
+                  );
+                },
+              ));
+            }),
+      ),
+    );
+  }
+}
+
+class _HeroAnimationRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("原图"),
+      ),
+      body: Center(
+        child: Hero(
+          tag: "avatar",
+          child: Image.asset("images/icon.png"),
+        ),
+      ),
     );
   }
 }
