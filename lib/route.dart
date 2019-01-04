@@ -59,6 +59,7 @@ var routeMap = {
   "scale_animation_page": (context) => ScaleAnimationRoute(),
   "custom_route_page": (context) => CustomSwitchRoute(),
   "hero_page": (context) => HeroRoute(),
+  "stagger_page": (context) => StaggerRoute(),
 };
 
 ///封装的目录页面
