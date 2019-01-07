@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/widgets.dart';
 
 class CustomWidgetRoute extends StatelessWidget {
   @override
@@ -8,6 +9,7 @@ class CustomWidgetRoute extends StatelessWidget {
     List<RouteBean> list = List();
     list.add(RouteBean("custom_intro_page", "简介"));
     list.add(RouteBean("custom_combination_page", "组合方式"));
+    list.add(RouteBean("turnbox_page", "实现TurnBox"));
     return RoutePage(list, "自定义Widget");
   }
 }
@@ -123,5 +125,119 @@ class GradientButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TurnBoxRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TurnBoxRouteState();
+}
+
+class _TurnBoxRouteState extends State<TurnBoxRoute> {
+  double _turns = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("TurnBox"),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            TurnBox(
+              turns: _turns,
+              speed: 500,
+              child: Icon(
+                Icons.refresh,
+                size: 50,
+              ),
+            ),
+            TurnBox(
+              turns: _turns,
+              speed: 1000,
+              child: Icon(
+                Icons.refresh,
+                size: 150,
+              ),
+            ),
+            RaisedButton(
+              child: Text("顺时针旋转4/5圈"),
+              onPressed: () {
+                setState(() {
+                  _turns += .8;
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text("逆时针旋转1/5圈"),
+              onPressed: () {
+                setState(() {
+                  _turns -= .2;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+///可自定义角度、旋转速度的widget
+class TurnBox extends StatefulWidget {
+  const TurnBox({
+    Key key,
+    this.turns = .0, //选择的圈数，一圈为360度
+    this.speed = 200, //过渡动画总时长
+    this.child,
+  }) : super(key: key);
+
+  final double turns;
+  final int speed;
+  final Widget child;
+
+  @override
+  State<StatefulWidget> createState() => _TurnBoxState();
+}
+
+class _TurnBoxState extends State<TurnBox> with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      lowerBound: -double.infinity,
+      upperBound: double.infinity,
+    );
+    _controller.value = widget.turns;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RotationTransition(
+      turns: _controller,
+      child: widget.child,
+    );
+  }
+
+  @override
+  void didUpdateWidget(TurnBox oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.turns != widget.turns) {
+      _controller.animateTo(
+        widget.turns,
+        duration: Duration(milliseconds: widget.speed ?? 200),
+        curve: Curves.easeOut,
+      );
+    }
   }
 }
