@@ -11,6 +11,7 @@ import 'widget/feature_widget.dart';
 import 'widget/layout_widget.dart';
 import 'widget/scroll_widget.dart';
 import 'widget/state_widget.dart';
+import 'file/file_and_net.dart';
 
 //路由表
 var routeMap = {
@@ -67,7 +68,11 @@ var routeMap = {
   "custom_combination_page": (context) => CombinationRoute(),
   "turnbox_page": (context) => TurnBoxRoute(),
   "canvas_page": (context) => CanvasRoute(),
-  "gradient_cicular_progress_page": (context) => GradientCircularProgressRoute(),
+  "gradient_cicular_progress_page": (context) =>
+      GradientCircularProgressRoute(),
+  //文件操作
+  "file_and_net_page": (context) => FileAndNetRoute(),
+  "file_page": (context) => FileRoute(),
 };
 
 ///封装的目录页面
