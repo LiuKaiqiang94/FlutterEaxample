@@ -67,6 +67,7 @@ var routeMap = {
   "custom_combination_page": (context) => CombinationRoute(),
   "turnbox_page": (context) => TurnBoxRoute(),
   "canvas_page": (context) => CanvasRoute(),
+  "gradient_cicular_progress_page": (context) => GradientCircularProgressRoute(),
 };
 
 ///封装的目录页面
