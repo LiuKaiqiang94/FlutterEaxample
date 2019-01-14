@@ -11,7 +11,7 @@ import 'widget/feature_widget.dart';
 import 'widget/layout_widget.dart';
 import 'widget/scroll_widget.dart';
 import 'widget/state_widget.dart';
-import 'file/file_and_net.dart';
+import 'net/file_and_net.dart';
 
 //路由表
 var routeMap = {
@@ -75,6 +75,7 @@ var routeMap = {
   "file_page": (context) => FileRoute(),
   "http_client_page": (context) => HttpClientRoute(),
   "dio_page": (context) => DioRoute(),
+  "sockets_page": (context) => WebSocketRoute(),
 };
 
 ///封装的目录页面

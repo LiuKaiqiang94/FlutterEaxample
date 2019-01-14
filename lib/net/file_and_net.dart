@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:web_socket_channel/io.dart';
 
 ///文件操作相关
 class FileAndNetRoute extends StatelessWidget {
@@ -14,6 +15,7 @@ class FileAndNetRoute extends StatelessWidget {
     list.add(RouteBean("file_page", "文件操作"));
     list.add(RouteBean("http_client_page", "HttpClient请求"));
     list.add(RouteBean("dio_page", "dio请求"));
+    list.add(RouteBean("sockets_page", "WebSockets"));
     return RoutePage(list, "文件和网络请求");
   }
 }
@@ -240,5 +242,104 @@ class _DioRouteState extends State<DioRoute> {
         ],
       ),
     );
+  }
+}
+
+///WebSocket的使用
+///1.连接到WebSocket服务器
+///2.监听来自服务器的消息
+///3.将数据发送到服务器
+///4.关闭WebSocket练级连接
+class WebSocketRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _WebSocketRouteState();
+}
+
+class _WebSocketRouteState extends State<WebSocketRoute> {
+  TextEditingController _controller = TextEditingController();
+  IOWebSocketChannel channel;
+  String _text = "";
+
+  String _response = "";
+
+  @override
+  void initState() {
+    super.initState();
+    channel = IOWebSocketChannel.connect("ws://echo.websocket.org");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("WebSocket"),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Form(
+              child: TextFormField(
+                controller: _controller,
+                decoration: InputDecoration(labelText: 'Send a message'),
+              ),
+            ),
+            StreamBuilder(
+              stream: channel.stream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  //网络不通
+                  _text = "网络不通...";
+                } else if (snapshot.hasData) {
+                  _text = "echo:" + snapshot.data;
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Text(_text),
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text("Socket API发送"),
+              onPressed: _request,
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text("$_response"),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _sendMessage,
+        tooltip: 'Send message',
+        child: Icon(Icons.send),
+      ),
+    );
+  }
+
+  void _sendMessage() {
+    if (_controller.text.isNotEmpty) {
+      channel.sink.add(_controller.text);
+    }
+  }
+
+  //使用Socket Api请求
+  _request() async {
+    var socket = await Socket.connect("baidu.com", 80);
+    socket.writeln("GET / HTTP/1.1");
+    socket.writeln("Host:baidu.com");
+    socket.writeln("Connection:close");
+    socket.writeln();
+    await socket.flush(); //发送
+    _response = await socket.transform(utf8.decoder).join();
+    await socket.close();
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
   }
 }
