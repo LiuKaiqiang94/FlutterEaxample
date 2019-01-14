@@ -74,6 +74,7 @@ var routeMap = {
   "file_and_net_page": (context) => FileAndNetRoute(),
   "file_page": (context) => FileRoute(),
   "http_client_page": (context) => HttpClientRoute(),
+  "dio_page": (context) => DioRoute(),
 };
 
 ///封装的目录页面

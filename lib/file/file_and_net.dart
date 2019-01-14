@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
+import 'package:dio/dio.dart';
 
 ///文件操作相关
 class FileAndNetRoute extends StatelessWidget {
@@ -12,6 +13,7 @@ class FileAndNetRoute extends StatelessWidget {
     List<RouteBean> list = List();
     list.add(RouteBean("file_page", "文件操作"));
     list.add(RouteBean("http_client_page", "HttpClient请求"));
+    list.add(RouteBean("dio_page", "dio请求"));
     return RoutePage(list, "文件和网络请求");
   }
 }
@@ -144,6 +146,98 @@ class _HttpClientRouteState extends State<HttpClientRoute> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DioRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _DioRouteState();
+}
+
+class _DioRouteState extends State<DioRoute> {
+  Dio _dio;
+  String _text = "";
+  Response response;
+
+  @override
+  void initState() {
+    super.initState();
+
+    ///创建并实例dio
+    _dio = Dio();
+  }
+
+  void _getRequest() async {
+    setState(() {
+      _text = "加载中";
+    });
+
+    ///两者等价
+    response = await _dio.get("/test?id=123&name=lucio");
+    response = await _dio.get("/test", data: {"id": 123, "name": "lucio"});
+    setState(() {
+      _text = response.data.toString();
+      print(response.data.toString());
+      print(response.data.toString());
+    });
+  }
+
+  void _postRequest() async {
+    response = await _dio.post("/test", data: {"id": 123, "name": "lucio"});
+    print(response.data.toString());
+  }
+
+  void _multiRequest() async {
+    // ignore: unused_local_variable
+    List<Response> response =
+        await Future.wait([_dio.post("/info"), _dio.get("/token")]);
+  }
+
+  void _downloadRequest() async {
+    response = await _dio.download("https://www.google.com", "savePath");
+  }
+
+  void _fromDataRequest() async {
+    FormData formData = FormData.from({
+      "name": "wemdux",
+      "age": 25,
+    });
+    response = await _dio.post("/info", data: formData);
+  }
+
+  void _uploadRequest() async {
+    FormData formData = FormData.from({
+      "name": "wemdux",
+      "age": 25,
+      "file1": UploadFileInfo(File("./upload.txt"), "upload1.txt"),
+      "file2": UploadFileInfo(File("./upload.txt"), "upload2.txt"),
+      //支持文件数组上传
+      "files": [
+        UploadFileInfo(File("./upload.txt"), "upload1.txt"),
+        UploadFileInfo(File("./upload.txt"), "upload2.txt"),
+      ]
+    });
+    response = await _dio.post("/info", data: formData);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("dio请求"),
+      ),
+      body: Column(
+        children: <Widget>[
+          RaisedButton(child: Text("get请求"), onPressed: _getRequest),
+          RaisedButton(child: Text("post请求"), onPressed: _postRequest),
+          RaisedButton(child: Text("多个并发请求"), onPressed: _multiRequest),
+          RaisedButton(child: Text("下载文件"), onPressed: _downloadRequest),
+          RaisedButton(child: Text("发送fromData"), onPressed: _fromDataRequest),
+          RaisedButton(child: Text("上传多个文件"), onPressed: _uploadRequest),
+          Text("$_text"),
+        ],
       ),
     );
   }
