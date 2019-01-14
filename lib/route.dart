@@ -76,6 +76,7 @@ var routeMap = {
   "http_client_page": (context) => HttpClientRoute(),
   "dio_page": (context) => DioRoute(),
   "sockets_page": (context) => WebSocketRoute(),
+  "json_page": (context) => JsonModelRoute(),
 };
 
 ///封装的目录页面

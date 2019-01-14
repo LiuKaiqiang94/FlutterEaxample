@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:web_socket_channel/io.dart';
+import 'user.dart';
 
 ///文件操作相关
 class FileAndNetRoute extends StatelessWidget {
@@ -16,6 +17,7 @@ class FileAndNetRoute extends StatelessWidget {
     list.add(RouteBean("http_client_page", "HttpClient请求"));
     list.add(RouteBean("dio_page", "dio请求"));
     list.add(RouteBean("sockets_page", "WebSockets"));
+    list.add(RouteBean("json_page", "Json Model"));
     return RoutePage(list, "文件和网络请求");
   }
 }
@@ -341,5 +343,36 @@ class _WebSocketRouteState extends State<WebSocketRoute> {
   void dispose() {
     channel.sink.close();
     super.dispose();
+  }
+}
+
+///json与model  todo 教程后面自动生成部分
+class JsonModelRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => JsonModelRouteState();
+}
+
+class JsonModelRouteState extends State<JsonModelRoute> {
+  @override
+  void initState() {
+    super.initState();
+    String jsonStr = '[{"name":"Jack"},{"name":"Rose"}]';
+    List items = json.decode(jsonStr);
+    print('一般方式：' + items[1]['name']);
+
+    String jsonStr2 = '{"name":"liu kaiqiang","email":"liukq1994@163.com"}';
+    Map userMap = json.decode(jsonStr2);
+    var user = User.formJson(userMap);
+    print('Howdy,${user.name}!');
+    print('We send the verification link to ${user.email}.');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Json Model"),
+      ),
+    );
   }
 }
