@@ -12,6 +12,7 @@ import 'widget/layout_widget.dart';
 import 'widget/scroll_widget.dart';
 import 'widget/state_widget.dart';
 import 'net/file_and_net.dart';
+import 'i18n/i18n.dart';
 
 //路由表
 var routeMap = {
@@ -77,6 +78,8 @@ var routeMap = {
   "dio_page": (context) => DioRoute(),
   "sockets_page": (context) => WebSocketRoute(),
   "json_page": (context) => JsonModelRoute(),
+  //国际化
+  "i18n_page": (context) => I18nRoute(),
 };
 
 ///封装的目录页面

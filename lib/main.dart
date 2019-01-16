@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_example/route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,13 +11,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo', //app name
+      //app name
+      title: 'Flutter Demo',
       theme: ThemeData(
         buttonColor: Colors.green.shade600,
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Home Page'), //应用首页路由
+      home: MyHomePage(title: 'Home Page'),
+      //应用首页路由
       routes: routeMap,
+      localizationsDelegates: [
+        //本地化的代理类
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'), //美国英语
+        const Locale('zh', 'CN'), //中文简体
+      ],
     );
   }
 }
@@ -45,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     list.add(RouteBean("animation_page", "动画"));
     list.add(RouteBean("custom_widget_page", "自定义Widget"));
     list.add(RouteBean("file_and_net_page", "文件操作与网络请求"));
+    list.add(RouteBean("i18n_page", "国际化"));
     list.add(RouteBean("cupertino_page", "open ios style test"));
     return WillPopScope(
       child: RoutePage(list, widget.title),
