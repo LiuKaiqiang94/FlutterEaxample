@@ -14,6 +14,8 @@ import 'widget/layout_widget.dart';
 import 'widget/scroll_widget.dart';
 import 'widget/state_widget.dart';
 import 'sample/sample.dart';
+import 'sample/bottom_navigation_widget.dart';
+import 'sample/bottom_appbar_demo.dart';
 
 //路由表
 var routeMap = {
@@ -83,6 +85,9 @@ var routeMap = {
   "i18n_page": (context) => I18nRoute(),
   //实例（来自技术胖）
   "sample_page": (context) => SampleRoute(),
+  "bottom_navigation": (context) => SampleRoute(),
+  "bottom_navigation_widget": (context) => BottomNavigationWidget(),
+  "bottom_appbar_demo": (context) => BottomAppbarDemo(),
 };
 
 ///封装的目录页面
