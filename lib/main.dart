@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     //每次setState都会调用build
     List<RouteBean> list = new List();
+    list.add(RouteBean("sample_page", "实例"));
     list.add(RouteBean("base_widget_page", "基础Widget"));
     list.add(RouteBean("layout_widget_page", "布局Widget"));
     list.add(RouteBean("container_widget_page", "容器类Widget"));

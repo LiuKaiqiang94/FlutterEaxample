@@ -1,6 +1,6 @@
 # Flutter Example
 
-学习flutter过程中的练习代码，example主要来自[《Flutter实战》](https://book.flutterchina.club/)一书。
+学习flutter过程中的练习代码，example主要来自[《Flutter实战》](https://book.flutterchina.club/)一书和[技术胖的博客](http://jspang.com/post/flutterDemo.html)。
 
 ## Getting Started
 
